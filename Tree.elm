@@ -79,9 +79,6 @@ tree1 = fromList [1,2,3]
 tree2 = fromList [2,1,3]
 
 
-main : Element
-main =
-  asText tree1
 
 {- PRACTICE PROBLEMS
 
@@ -137,3 +134,37 @@ EXTRA EXERCISES:
 
 -----------------------------------------------------------------}
 
+sum : Tree number -> number
+sum tree =
+    case tree of
+        Empty ->
+            0
+        Node num left right ->
+            num + sum left + sum right
+
+
+flatten : Tree a -> List a
+flatten tree =
+    case tree of
+        Empty ->
+            []
+        Node num left right ->
+            [num] ++ flatten left ++ flatten right
+
+
+isMember : comparable -> Tree comparable -> Bool
+isMember value tree =
+    case tree of
+        Empty ->
+            False
+        Node num left right ->
+          if  | num == value    -> True
+              | num < value     -> isMember value right
+              | otherwise -> isMember value left
+
+main : Element
+main =
+--  asText (sum tree1)
+--  asText (flatten tree1)
+--  asText (isMember 1 tree1)
+    flow down [asText (sum tree1), asText (flatten tree1), asText (isMember 1 tree1)]
